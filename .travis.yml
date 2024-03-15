@@ -1,0 +1,9 @@
+# Config file for automatic testing at travis-ci.com
+
+language: python
+
+# Command to install dependencies
+install: pip install -r requirements.txt --use-mirrors
+
+
+
