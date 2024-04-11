@@ -42,3 +42,26 @@ class Models :
         models['naivebayes'] = GaussianNB()
         model_tuples = [(name, estimator) for name, estimator in models.items()]
         return models, model_tuples
+    
+
+
+    def evaluate_model(self, model, X, y):
+        """
+        Évalue les performances du modèle en utilisant la validation croisée stratifiée répétée.
+
+        Entrées:
+        model : object
+            Instance du modèle à évaluer.
+        X : array-like
+            Tableau de forme (n_samples, n_features) contenant les données d'entraînement.
+        y : array-like
+            Tableau de forme (n_samples,) contenant les étiquettes cibles correspondant aux échantillons dans X.
+
+        Sortie:
+        scores : array-like
+            Tableau contenant les scores d'exactitude pour chaque pli de validation croisée.
+        """
+        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+        scores = cross_val_score(model, X, y, scoring='accuracy', cv=cv, n_jobs=-1, error_score='raise')
+        return scores
+
