@@ -22,45 +22,44 @@ class Data_preprocessing:
         self.data = pd.read_csv(self.path)
         return self.data
 
-   def fill_missing_with_mode(data, columns):  
+   def fill_missing_with_mode(self, columns):  
       """
       Replaces missing values in specified columns with the mode of each column.
       Returns:
       - data: The modified dataframe with missing values replaced by each column's mode.
       """
+      data = self.data 
       for col in columns:
          mode_val = data[col].mode()[0]  
          data[col].fillna(mode_val, inplace=True) 
       return data
    
-   def fill_missing_with_mean(data, columns):
+   def fill_missing_with_mean(self, columns):
       """
       Replaces missing values in specified columns with the mean of each column.
-      
-      Args:
-      - data: The dataframe containing the data.
-      - columns: A list of column names where missing values should be handled.
-      
+
       Returns:
       - data: The modified dataframe with missing values replaced by each column's mean.
       """
+      data = self.data
       for col in columns:
          mean_val = data[col].mean()
          data[col].fillna(mean_val, inplace=True) 
       return data
    
-   def fill_missing_with_median(data, columns):
+   def fill_missing_with_median(self, columns):
       """
       Replaces missing values in specified columns with the median of each column.
       Returns:
       - data: The modified dataframe with missing values replaced by each column's median.
       """
+      data = self.data
       for col in columns:
          median_val = data[col].median()  
          data[col].fillna(median_val, inplace=True) 
       return data
    
-   def remove_outliers(data):
+   def remove_outliers(self):
       """
       Removes outliers from the dataset using the Interquartile Range (IQR) method.
       
@@ -70,6 +69,7 @@ class Data_preprocessing:
       Returns:
       - data_filtered: The dataframe with outliers removed.
       """
+      data = self.data
       Q1 = data.quantile(0.25)  
       Q3 = data.quantile(0.75) 
       IQR = Q3 - Q1 
@@ -79,7 +79,7 @@ class Data_preprocessing:
       
       return data_filtered
    
-   def encode_categorical_binary(data, columns):
+   def encode_categorical_binary(self, columns):
       """
       Encodes categorical variables in the dataframe as binary values (0 and 1).
       
@@ -90,11 +90,12 @@ class Data_preprocessing:
       Returns:
       - data: The modified dataframe with categorical variables encoded as binary values.
       """
+      data = self.data
       for col in columns:
          data[col].replace({'No': 0, 'Yes': 1}, inplace=True)
       return data
    
-   def split_date_columns(data, date_column):
+   def split_date_columns(self, date_column):
       """
       Splits a date column into separate 'year', 'month', and 'day' columns.
       Removes the original date column.
@@ -106,13 +107,14 @@ class Data_preprocessing:
       Returns:
       - data: The modified dataframe with separate date columns.
       """
+      data = self.data
       data[['year', 'month', 'day']] = data[date_column].str.split('-', expand=True)
       data = data.drop([date_column], axis=1)
       return data
    
    from sklearn.preprocessing import LabelEncoder
 
-   def encode_categorical_label(data, columns):
+   def encode_categorical_label(self, columns):
       """
       Encodes categorical variables in the dataframe using LabelEncoder.
       
@@ -123,6 +125,7 @@ class Data_preprocessing:
       Returns:
       - data: The modified dataframe with categorical variables encoded.
       """
+      data= self.data
       label_encoder = LabelEncoder()
       for col in columns:
          unique_values = list(set(data[col].unique()))
@@ -138,6 +141,7 @@ class Data_preprocessing:
             df: dataframe of all the features 
             target: name of the target
 
+
       Returns:
             X_train, X_test, y_train, y_test: train and test features and train and test labels
         """
@@ -147,7 +151,7 @@ class Data_preprocessing:
 
       return X_train, X_test, y_train, y_test
 
-   def balance_data(X_train, y_train):
+   def balance_data(self, X_train, y_train):
       """
       Balances the classes in the dataset using SMOTE (Synthetic Minority Over-sampling Technique).
 
