@@ -46,5 +46,16 @@ class Data_preprocessing:
          mean_val = data[col].mean()
          data[col].fillna(mean_val, inplace=True) 
       return data
+   
+   def fill_missing_with_median(data, columns):
+      """
+      Replaces missing values in specified columns with the median of each column.
+      Returns:
+      - data: The modified dataframe with missing values replaced by each column's median.
+      """
+      for col in columns:
+         median_val = data[col].median()  
+         data[col].fillna(median_val, inplace=True) 
+      return data
 
    
