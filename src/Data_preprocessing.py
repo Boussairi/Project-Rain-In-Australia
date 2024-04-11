@@ -57,5 +57,24 @@ class Data_preprocessing:
          median_val = data[col].median()  
          data[col].fillna(median_val, inplace=True) 
       return data
+   
+   def remove_outliers(data):
+      """
+      Removes outliers from the dataset using the Interquartile Range (IQR) method.
+      
+      Args:
+      - data: The dataframe containing the data.
+      
+      Returns:
+      - data_filtered: The dataframe with outliers removed.
+      """
+      Q1 = data.quantile(0.25)  
+      Q3 = data.quantile(0.75) 
+      IQR = Q3 - Q1 
+      
+      # Filter out rows with outliers
+      data_filtered = data[~((data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))).any(axis=1)]
+      
+      return data_filtered
 
    
