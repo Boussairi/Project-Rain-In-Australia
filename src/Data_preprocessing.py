@@ -158,6 +158,12 @@ class Data_preprocessing:
       smote = SMOTE()
       X_balanced, y_balanced = smote.fit_resample(X_train, y_train)
       return X_balanced, y_balanced
+   
+   def Counter(y):
+      Counter = {}
+      Counter[0] = y.value_counts()[0]
+      Counter[1] = y.value_counts()[1]
+      return Counter
 
 
 
