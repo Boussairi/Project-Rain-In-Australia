@@ -65,3 +65,27 @@ class Models :
         scores = cross_val_score(model, X, y, scoring='accuracy', cv=cv, n_jobs=-1, error_score='raise')
         return scores
 
+
+        
+
+
+    def get_stacking(self, models_tuple):
+        """
+        Renvoie un modèle de stacking basé sur les modèles fournis.
+
+        Entrées:
+        models_tuple : list
+            Une liste de tuples contenant des noms de modèles et les instances de ces modèles.
+
+        Sortie:
+        model : object
+            Instance du modèle de stacking.
+        """
+        # define our base  models
+        level0 = models_tuple
+        # define our meta learner model
+        level1 = LogisticRegression()
+        # define the stacking ensemble
+        model = StackingClassifier(estimators=level0, final_estimator=level1, cv=5)
+        return model
+    
