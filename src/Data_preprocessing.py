@@ -91,6 +91,22 @@ class Data_preprocessing:
       for col in columns:
          data[col].replace({'No': 0, 'Yes': 1}, inplace=True)
       return data
+   
+   def split_date_columns(data, date_column):
+      """
+      Splits a date column into separate 'year', 'month', and 'day' columns.
+      Removes the original date column.
+      
+      Args:
+      - data: The dataframe containing the data.
+      - date_column: The name of the column containing the date to be split.
+      
+      Returns:
+      - data: The modified dataframe with separate date columns.
+      """
+      data[['year', 'month', 'day']] = data[date_column].str.split('-', expand=True)
+      data = data.drop([date_column], axis=1)
+      return data
 
 
    
