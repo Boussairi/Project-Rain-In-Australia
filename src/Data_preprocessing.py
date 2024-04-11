@@ -31,3 +31,20 @@ class Data_preprocessing:
          data[col].fillna(mode_val, inplace=True) 
       return data
    
+   def fill_missing_with_mean(data, columns):
+      """
+      Replaces missing values in specified columns with the mean of each column.
+      
+      Args:
+      - data: The dataframe containing the data.
+      - columns: A list of column names where missing values should be handled.
+      
+      Returns:
+      - data: The modified dataframe with missing values replaced by each column's mean.
+      """
+      for col in columns:
+         mean_val = data[col].mean()
+         data[col].fillna(mean_val, inplace=True) 
+      return data
+
+   
