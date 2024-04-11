@@ -76,5 +76,21 @@ class Data_preprocessing:
       data_filtered = data[~((data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))).any(axis=1)]
       
       return data_filtered
+   
+   def encode_categorical_binary(data, columns):
+      """
+      Encodes categorical variables in the dataframe as binary values (0 and 1).
+      
+      Args:
+      - data: The dataframe containing the data.
+      - columns: A list of column names where categorical variables should be encoded.
+      
+      Returns:
+      - data: The modified dataframe with categorical variables encoded as binary values.
+      """
+      for col in columns:
+         data[col].replace({'No': 0, 'Yes': 1}, inplace=True)
+      return data
+
 
    
