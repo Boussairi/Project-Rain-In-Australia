@@ -127,6 +127,23 @@ class Data_preprocessing:
          label_encoder.fit(unique_values)
          data[col] = label_encoder.transform(data[col])
       return data
+   
+   def Split_data(self, df, target):
+      """
+      Split data to train and test 
+
+      Args: 
+            df: dataframe of all the features 
+            target: name of the target
+
+      Returns:
+            X_train, X_test, y_train, y_test: train and test features and train and test labels
+        """
+      features = df.drop(target, axis =1)
+      targets = df[target]
+      X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size = 0.2, random_state=42)
+
+      return X_train, X_test, y_train, y_test
 
 
 
