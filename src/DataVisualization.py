@@ -5,7 +5,8 @@ import seaborn as sns
 import plotly.express as px
 
 class DataVisualization: 
-    def __init__(self, path): 
+    def __init__(self):
+
         pass
 
     
@@ -70,6 +71,7 @@ class DataVisualization:
 
         plt.tight_layout()
         plt.show()
+        
 
     
     def scatter_plot(self, column1, column2, data_viz):
