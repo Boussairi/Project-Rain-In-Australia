@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
-class data_visualization: 
+class DataVisualization: 
     def __init__(self, path): 
         pass
 
@@ -39,7 +39,7 @@ class data_visualization:
         plt.ylabel('Value')
         plt.xticks(rotation=45) 
 
-    def relationWithRainfall(self, column1, column2, data_viz):
+    def relation_with_rainfall(self, column1, column2, data_viz):
         """
         gives 2 lineplot showing the relationship between 2 certain columns and the column Rainfall
 
@@ -73,6 +73,20 @@ class data_visualization:
 
     
     def scatter_plot(self, column1, column2, data_viz):
+        """
+        gives scatterplot showing the relationship between 2 certain columns and the column Rainfall
+
+        Args: 
+            column1:  name of the first column to plot
+            column2:  name of the second column to plot
+            data_viz: the data we're using for visualization
+        
+        Returns: 
+            None: generates an animated scatterplot  
+        """
+    
         fig = px.scatter(data_viz, x=column1, y=column2, color="Rainfall", title="Relationship between " + column1 + "," + column2 + "and Rainfall")
         fig.update_layout(width=800, height=600)
-        fig.show() 
+        fig.show()
+
+    
