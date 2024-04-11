@@ -107,6 +107,27 @@ class Data_preprocessing:
       data[['year', 'month', 'day']] = data[date_column].str.split('-', expand=True)
       data = data.drop([date_column], axis=1)
       return data
+   
+   from sklearn.preprocessing import LabelEncoder
+
+   def encode_categorical_label(data, columns):
+      """
+      Encodes categorical variables in the dataframe using LabelEncoder.
+      
+      Args:
+      - data: The dataframe containing the data.
+      - columns: A list of column names to be encoded.
+      
+      Returns:
+      - data: The modified dataframe with categorical variables encoded.
+      """
+      label_encoder = LabelEncoder()
+      for col in columns:
+         unique_values = list(set(data[col].unique()))
+         label_encoder.fit(unique_values)
+         data[col] = label_encoder.transform(data[col])
+      return data
+
 
 
    
