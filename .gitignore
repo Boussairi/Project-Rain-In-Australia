@@ -22,5 +22,3 @@ ENV/
 # IDE settings
 .vscode/
 .idea/
-
-data/
