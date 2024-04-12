@@ -22,7 +22,7 @@ class DataPreprocessing:
         self.data = pd.read_csv(self.path)
         return self.data
 
-   def fill_missing_with_mode(self, columns, data):  
+   def fill_missing_with_mode(columns, data):  
       """
       Replaces missing values in specified columns with the mode of each column.
       Returns:
