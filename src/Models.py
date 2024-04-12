@@ -19,6 +19,11 @@ import xgboost as xgb
 
 class Models :
 
+
+    def __init__(self):
+        pass
+
+
     def get_models(self):
         """
         Renvoie un dictionnaire de modèles et une liste de tuples (nom du modèle, modèle).
