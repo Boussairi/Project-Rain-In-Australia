@@ -5,7 +5,7 @@ from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import LabelEncoder
 
 
-class Data_preprocessing: 
+class DataPreprocessing: 
    def __init__(self, path): 
         """
         Constructor for the Data_preprocessing class
