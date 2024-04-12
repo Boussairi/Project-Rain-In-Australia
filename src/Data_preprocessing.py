@@ -112,8 +112,6 @@ class Data_preprocessing:
       data = data.drop([date_column], axis=1)
       return data
    
-   from sklearn.preprocessing import LabelEncoder
-
    def encode_categorical_label(self, columns):
       """
       Encodes categorical variables in the dataframe using LabelEncoder.
@@ -163,7 +161,7 @@ class Data_preprocessing:
       X_balanced, y_balanced = smote.fit_resample(X_train, y_train)
       return X_balanced, y_balanced
    
-   def Counter(y):
+   def Counter(self, y):
       Counter = {}
       Counter[0] = y.value_counts()[0]
       Counter[1] = y.value_counts()[1]
