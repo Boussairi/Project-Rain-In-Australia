@@ -22,41 +22,47 @@ class DataPreprocessing:
         self.data = pd.read_csv(self.path)
         return self.data
 
-   def fill_missing_with_mode(columns, data):  
+   def fill_missing_with_mode(self, columns):  
       """
       Replaces missing values in specified columns with the mode of each column.
       Returns:
       - data: The modified dataframe with missing values replaced by each column's mode.
       """
+      data = self.data
       for col in columns:
          mode_val = data[col].mode()[0]  
          data[col].fillna(mode_val, inplace=True) 
-      return data
+         self.data = data
+      return self.data
    
-   def fill_missing_with_mean(self, columns, data):
+   def fill_missing_with_mean(self, columns):
       """
       Replaces missing values in specified columns with the mean of each column.
 
       Returns:
       - data: The modified dataframe with missing values replaced by each column's mean.
       """
+      data = self.data
       for col in columns:
          mean_val = data[col].mean()
          data[col].fillna(mean_val, inplace=True) 
-      return data
+         self.data = data
+      return self.data
    
-   def fill_missing_with_median(self, columns, data):
+   def fill_missing_with_median(self, columns):
       """
       Replaces missing values in specified columns with the median of each column.
       Returns:
       - data: The modified dataframe with missing values replaced by each column's median.
       """
+      data = self.data
       for col in columns:
          median_val = data[col].median()  
-         data[col].fillna(median_val, inplace=True) 
+         data[col].fillna(median_val, inplace=True)
+         self.data = data 
       return data
    
-   def remove_outliers(self,data):
+   def remove_outliers(self):
       """
       Removes outliers from the dataset using the Interquartile Range (IQR) method.
       
@@ -66,16 +72,18 @@ class DataPreprocessing:
       Returns:
       - data_filtered: The dataframe with outliers removed.
       """
+      data = self.data
+
       Q1 = data.quantile(0.25)  
       Q3 = data.quantile(0.75) 
       IQR = Q3 - Q1 
       
       # Filter out rows with outliers
       data_filtered = data[~((data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))).any(axis=1)]
-      
-      return data_filtered
+      self.data = data_filtered
+      return self.data
    
-   def encode_categorical_binary(self, column, data):
+   def encode_categorical_binary(self, column):
       """
       Encodes categorical variables in the dataframe as binary values (0 and 1).
       
@@ -86,11 +94,13 @@ class DataPreprocessing:
       Returns:
       - data: The modified dataframe with categorical variables encoded as binary values.
       """
+      data = self.data
       data[column].replace({'No': 0, 'Yes': 1}, inplace=True)
+      self.data = data
 
-      return data
+      return self.data
    
-   def split_date_columns(self, date_column,data):
+   def split_date_columns(self, date_column):
       """
       Splits a date column into separate 'year', 'month', and 'day' columns.
       Removes the original date column.
@@ -102,11 +112,13 @@ class DataPreprocessing:
       Returns:
       - data: The modified dataframe with separate date columns.
       """
+      data = self.data
       data[['year', 'month', 'day']] = data[date_column].str.split('-', expand=True)
       data = data.drop([date_column], axis=1)
-      return data
+      self.data = data
+      return self.data
    
-   def encode_categorical_label(self, columns, data):
+   def encode_categorical_label(self, columns):
       """
       Encodes categorical variables in the dataframe using LabelEncoder.
       
@@ -117,14 +129,16 @@ class DataPreprocessing:
       Returns:
       - data: The modified dataframe with categorical variables encoded.
       """
+      data = self.data
       label_encoder = LabelEncoder()
       for col in columns:
          unique_values = list(set(data[col].unique()))
          label_encoder.fit(unique_values)
          data[col] = label_encoder.transform(data[col])
-      return data
+      self.data = data
+      return self.data
    
-   def Split_data(self, df, target):
+   def Split_data(self, target):
       """
       Split data to train and test 
 
@@ -136,6 +150,7 @@ class DataPreprocessing:
       Returns:
             X_train, X_test, y_train, y_test: train and test features and train and test labels
         """
+      df = self.data
       features = df.drop(target, axis =1)
       targets = df[target]
       X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size = 0.2, random_state=42)
