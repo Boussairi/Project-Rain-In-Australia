@@ -13,9 +13,8 @@ from sklearn.naive_bayes import GaussianNB
 
 from sklearn.ensemble import StackingClassifier
 
+import xgboost as xgb
 
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 class Models :
@@ -37,7 +36,7 @@ class Models :
         models['DT'] = DecisionTreeClassifier()
         models['RF'] = RandomForestClassifier()
         models['knn'] = KNeighborsClassifier()
-        #models['xgb'] = xgboost.XGBClassifier()
+        models['xgb'] = xgb.XGBClassifier()
         models['svm'] = SVC()
         models['naivebayes'] = GaussianNB()
         model_tuples = [(name, estimator) for name, estimator in models.items()]
