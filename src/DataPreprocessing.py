@@ -79,7 +79,7 @@ class DataPreprocessing:
       
       return data_filtered
    
-   def encode_categorical_binary(self, columns):
+   def encode_categorical_binary(self, column):
       """
       Encodes categorical variables in the dataframe as binary values (0 and 1).
       
@@ -91,8 +91,8 @@ class DataPreprocessing:
       - data: The modified dataframe with categorical variables encoded as binary values.
       """
       data = self.data
-      for col in columns:
-         data[col].replace({'No': 0, 'Yes': 1}, inplace=True)
+      data[column].replace({'No': 0, 'Yes': 1}, inplace=True)
+      
       return data
    
    def split_date_columns(self, date_column):
