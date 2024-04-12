@@ -40,7 +40,8 @@ class DataVisualization:
         plt.ylabel('Value')
         plt.xticks(rotation=45) 
 
-    def relation_with_rainfall(self, data_viz, titles, x_labels, axes):
+    @staticmethod
+    def relation_with_rainfall(data_viz, titles, x_labels, axes):
         """
         gives 2 lineplot showing the relationship between 2 certain columns and the column Rainfall
 
