@@ -40,7 +40,7 @@ class DataVisualization:
         plt.ylabel('Value')
         plt.xticks(rotation=45) 
 
-    def relation_with_rainfall(self, column1, column2, data_viz):
+    def relation_with_rainfall(self, data_viz, titles, x_labels, axes):
         """
         gives 2 lineplot showing the relationship between 2 certain columns and the column Rainfall
 
@@ -53,15 +53,9 @@ class DataVisualization:
             None: generates 2 different lineplots next to each other 
         """
 
-
-        fig, axes = plt.subplots(1, 2, figsize=(20, 8), facecolor='white')
-
-        titles = ["Relationship between " + column1 + "and Rainfall" + "Relationship between " + column2 +"and Rainfall"]
-        x_labels = [column1, column2]
-
         for ax, title, x_label in zip(axes, titles, x_labels):
             ax.set_title(title, fontsize=21, fontweight='bold', fontfamily='monospace')
-            sns.lineplot(data=data_viz, x=x_label, y='Rainfall', ax=ax, color='goldenrod' if x_label == column1 else 'salmon')
+            sns.lineplot(data=data_viz, x=x_label, y='Rainfall', ax=ax, color='goldenrod' if x_label == x_labels[0] else 'salmon')
             ax.set_ylabel('Rainfall', rotation=0, fontsize=14, fontfamily='monospace')
             ax.set_yticklabels('')
             ax.tick_params(axis='y', length=0)
