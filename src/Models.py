@@ -1,20 +1,17 @@
 
+import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
-
 from sklearn.ensemble import RandomForestClassifier
-
-from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import VotingClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
-
 from sklearn.ensemble import StackingClassifier
-
+from sklearn.model_selection import cross_val_score
 #import xgboost as xgb
-from sklearn.ensemble import VotingClassifier
 from sklearn.metrics import classification_report
 
 
@@ -108,7 +105,7 @@ class Models :
         predictions = model.predict(X_test)
         return predictions
     
-    def evaluate_model_metrics(self, model, y_test, predictions):
+    def evaluate_model_metrics(self, y_test, predictions):
         """
         Evaluate the model using classification report.
 
@@ -123,5 +120,9 @@ class Models :
         report : str
             Classification report containing evaluation metrics.
         """
-        report = classification_report(y_test, predictions)
-        return report
+        report = classification_report(y_test, predictions,output_dict=True)
+        accuracy = report.pop('accuracy', report['accuracy'])
+
+        report_df = pd.DataFrame(report).transpose()
+        
+        return report_df, accuracy
