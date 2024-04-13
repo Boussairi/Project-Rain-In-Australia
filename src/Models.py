@@ -63,7 +63,24 @@ class Models :
         # define the stacking ensemble
         model = StackingClassifier(estimators=level0, final_estimator=level1, cv=5)
         return model
-       
+
+
+    def evaluate_model(self, model, X, y):
+        """
+        Evaluate the model's performance using repeated stratified cross-validation.
+
+        args:
+            model : Instance of the model to evaluate.
+            X : Array of shape (n_samples, n_features) containing the training data.
+            y : Array of shape (n_samples,) containing the target labels corresponding to the samples in X.
+
+        Output:
+            scores : Array containing accuracy scores for each cross-validation fold.
+        """
+        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+        scores = cross_val_score(model, X, y, scoring='accuracy', cv=cv, n_jobs=-1, error_score='raise')
+        return scores 
+
 
     def hard_voting(self, models_tuple): 
         """
@@ -109,6 +126,7 @@ class Models :
             No output
         """
         model.fit(X_train, y_train)
+
 
     def get_predictions(self, model, X_test):
         """
