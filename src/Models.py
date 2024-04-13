@@ -13,7 +13,10 @@ from sklearn.naive_bayes import GaussianNB
 
 from sklearn.ensemble import StackingClassifier
 
-import xgboost as xgb
+#import xgboost as xgb
+from sklearn.ensemble import VotingClassifier
+from sklearn.metrics import classification_report
+
 
 
 
@@ -41,7 +44,7 @@ class Models :
         models['DT'] = DecisionTreeClassifier()
         models['RF'] = RandomForestClassifier()
         models['knn'] = KNeighborsClassifier()
-        models['xgb'] = xgb.XGBClassifier()
+        #models['xgb'] = xgb.XGBClassifier()
         models['svm'] = SVC()
         models['naivebayes'] = GaussianNB()
         model_tuples = [(name, estimator) for name, estimator in models.items()]
@@ -53,7 +56,7 @@ class Models :
         """
         Évalue les performances du modèle en utilisant la validation croisée stratifiée répétée.
 
-        Entrées:
+        Args:
         model : object
             Instance du modèle à évaluer.
         X : array-like
@@ -61,7 +64,7 @@ class Models :
         y : array-like
             Tableau de forme (n_samples,) contenant les étiquettes cibles correspondant aux échantillons dans X.
 
-        Sortie:
+        Returns:
         scores : array-like
             Tableau contenant les scores d'exactitude pour chaque pli de validation croisée.
         """
@@ -93,3 +96,32 @@ class Models :
         model = StackingClassifier(estimators=level0, final_estimator=level1, cv=5)
         return model
     
+
+    def hard_voting(self, models_tuple): 
+        hard_voting_model = VotingClassifier(estimators= models_tuple, voting='hard')
+        return hard_voting_model
+
+    def fit_model(self,model, X_train, y_train): 
+        model.fit(X_train, y_train)
+
+    def get_predictions(self, model, X_test): 
+        predictions = model.predict(X_test)
+        return predictions
+    
+    def evaluate_model_metrics(self, model, y_test, predictions):
+        """
+        Evaluate the model using classification report.
+
+        Inputs:
+        model : Instance of the model to evaluate.
+        X : array-like
+            Array of shape (n_samples, n_features) containing the input data.
+        y : array-like
+            Array of shape (n_samples,) containing the target labels.
+
+        Output:
+        report : str
+            Classification report containing evaluation metrics.
+        """
+        report = classification_report(y_test, predictions)
+        return report
