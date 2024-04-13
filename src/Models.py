@@ -79,7 +79,7 @@ class Models :
         return hard_voting_model
     
 
-    def soft_voting(self):  
+    def soft_voting(self):
         """
         Gives a soft voting model based on the input models
 
@@ -88,14 +88,15 @@ class Models :
         Returns: 
             soft_voting_model : Instance of the soft voting model
         """
-        tuple= [('DT', DecisionTreeClassifier(max_leaf_nodes=10)),
+        list_tuples = [('DT', DecisionTreeClassifier(max_leaf_nodes=10)),
                     ('RF', RandomForestClassifier()),
                     ('knn', KNeighborsClassifier()),
                     ('svm', SVC(probability=True)),
                     ('naivebayes', GaussianNB())]
-        soft_voting_model = VotingClassifier(estimators= tuple, voting='soft')
+        soft_voting_model = VotingClassifier(estimators= list_tuples, voting='soft')
 
         return soft_voting_model
+        
 
     def fit_model(self,model, X_train, y_train): 
         """
