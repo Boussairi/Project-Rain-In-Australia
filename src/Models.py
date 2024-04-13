@@ -26,16 +26,14 @@ class Models :
 
     def get_models(self):
         """
-        Renvoie un dictionnaire de modèles et une liste de tuples (nom du modèle, modèle).
-        
-        Entrées:
-        Aucune entrée requise.
+        Gives a dictionnary of models and a list of tuples (model_name, model estimator)
 
-        Sorties:
-        models : dict
-            Un dictionnaire contenant des noms de modèles comme clés et les instances de ces modèles comme valeurs.
-        model_tuples : list
-            Une liste de tuples contenant des noms de modèles et les instances de ces modèles.
+        args:
+            no input variable
+
+        Returns:
+            models : a dictionnary of models along with their associated estimators
+            model_tuples : a list of tuples of models along with their associated estimators
         """
         models = {}
         models['DT'] = DecisionTreeClassifier()
@@ -48,42 +46,15 @@ class Models :
         return models, model_tuples
     
 
-
-    def evaluate_model(self, model, X, y):
-        """
-        Évalue les performances du modèle en utilisant la validation croisée stratifiée répétée.
-
-        Args:
-        model : object
-            Instance du modèle à évaluer.
-        X : array-like
-            Tableau de forme (n_samples, n_features) contenant les données d'entraînement.
-        y : array-like
-            Tableau de forme (n_samples,) contenant les étiquettes cibles correspondant aux échantillons dans X.
-
-        Returns:
-        scores : array-like
-            Tableau contenant les scores d'exactitude pour chaque pli de validation croisée.
-        """
-        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
-        scores = cross_val_score(model, X, y, scoring='accuracy', cv=cv, n_jobs=-1, error_score='raise')
-        return scores
-
-
-        
-
-
     def get_stacking(self, models_tuple):
         """
-        Renvoie un modèle de stacking basé sur les modèles fournis.
+        Gives a stacking model based on the input models
 
-        Entrées:
-        models_tuple : list
-            Une liste de tuples contenant des noms de modèles et les instances de ces modèles.
+        args:
+            models_tuple : a list of tuples of models along with their associated estimators
 
-        Sortie:
-        model : object
-            Instance du modèle de stacking.
+        Returns: 
+            model : Instance of the stacking model
         """
         # define our base  models
         level0 = models_tuple
@@ -92,33 +63,78 @@ class Models :
         # define the stacking ensemble
         model = StackingClassifier(estimators=level0, final_estimator=level1, cv=5)
         return model
-    
+       
 
     def hard_voting(self, models_tuple): 
+        """
+        Gives a hard voting model based on the input models
+
+        args:
+            models_tuple : a list of tuples of models along with their associated estimators
+
+        Returns: 
+            hard_voting_model : Instance of the hard voting model
+        """
         hard_voting_model = VotingClassifier(estimators= models_tuple, voting='hard')
         return hard_voting_model
+    
+
+    def soft_voting(self):  
+        """
+        Gives a soft voting model based on the input models
+
+        args: 
+            no input required
+        Returns: 
+            soft_voting_model : Instance of the soft voting model
+        """
+        tuple= [('DT', DecisionTreeClassifier(max_leaf_nodes=10)),
+                    ('RF', RandomForestClassifier()),
+                    ('knn', KNeighborsClassifier()),
+                    ('svm', SVC(probability=True)),
+                    ('naivebayes', GaussianNB())]
+        soft_voting_model = VotingClassifier(estimators= tuple, voting='soft')
+
+        return soft_voting_model
 
     def fit_model(self,model, X_train, y_train): 
+        """
+        fits the model to the training data
+
+        args: 
+            X_train: our training features
+            y_train: our training target
+        Returns: 
+            No output
+        """
         model.fit(X_train, y_train)
 
-    def get_predictions(self, model, X_test): 
+    def get_predictions(self, model, X_test):
+        """
+        Gives predictions using the model provided
+
+        args: 
+            model: the trained model
+            X_test: the data we want to test on (features)
+        Returns: 
+            predictions : predicted target using the model given
+        """ 
         predictions = model.predict(X_test)
         return predictions
+    
     
     def evaluate_model_metrics(self, y_test, predictions):
         """
         Evaluate the model using classification report.
 
-        Inputs:
-        model : Instance of the model to evaluate.
-        X : array-like
-            Array of shape (n_samples, n_features) containing the input data.
-        y : array-like
-            Array of shape (n_samples,) containing the target labels.
-
-        Output:
-        report : str
-            Classification report containing evaluation metrics.
+        args:
+            y_test: the true test target
+            predictions: the predicted target
+           
+        Returns:
+            report_df : dataframe containing the report of evaluation metrics (without accuracy)
+            accuracy : the accuracy value extracted from the report dictionnary
+                
         """
         report = classification_report(y_test, predictions,output_dict=True)
         accuracy = report.pop('accuracy', report['accuracy'])
