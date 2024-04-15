@@ -15,8 +15,7 @@ Ce projet, qui s'inscrit dans le domaine de la biodiversité, vise à résoudre 
         ├── DataVisualization.py
         ├── Models.py
     ├── requirements.txt
-    ├── partie 1 - projet.ipynb
-    ├── partie 2 - projet.ipynb
+    ├── projet.ipynb
     ├── LICENSE
     ├── AUTHORS.rst
     ├── .editorconfig
