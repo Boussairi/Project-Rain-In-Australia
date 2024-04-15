@@ -1,4 +1,4 @@
-# Projet IFT870 : *Rain In Australy*
+# Projet IFT870 : *Rain Prediction in Australia*
 
 ## Aperçu
 
@@ -15,7 +15,7 @@ Ce projet, qui s'inscrit dans le domaine de la biodiversité, vise à résoudre 
         ├── DataVisualization.py
         ├── Models.py
     ├── requirements.txt
-    ├── projet.ipynb
+    ├── Partie2 - projet.ipynb
     ├── LICENSE
     ├── AUTHORS.rst
     ├── .editorconfig
@@ -53,7 +53,7 @@ La structure du projet est organisée comme suit :
 
    ```bash
    # Clonez le dépôt GitHub
-   git clone (https://github.com/Boussairi/Project-Rain-In-Australy)
+   git clone (https://github.com/Boussairi/Project-Rain-In-Australia)
    cd nom-du-projet
    
    # Créez un environnement virtuel (optionnel, mais recommandé)
@@ -67,7 +67,7 @@ La structure du projet est organisée comme suit :
 
    #Installez les dépendances
    pip install -r requirements.txt
-
+```
 ### Comment Contribuer
 
 1. **Créez une Issue :** Avant de commencer à contribuer, créez une issue pour discuter des modifications que vous envisagez. Cela permet d'obtenir des commentaires et d'éviter tout chevauchement avec d'autres contributeurs.
@@ -75,8 +75,8 @@ La structure du projet est organisée comme suit :
 2. **Fork et Clone :** Fork le dépôt vers votre propre compte GitHub et clonez-le sur votre machine locale.
 
    ```bash
-   git clone https://github.com/Boussairi/Project-Rain-In-Australy 
-   ```
+   git clone https://github.com/Boussairi/Project-Rain-In-Australia
+   
 
 3. **Créez une Branche :** Créez une branche pour travailler sur votre nouvelle fonctionnalité ou correction.
 
