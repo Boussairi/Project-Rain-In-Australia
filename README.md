@@ -11,9 +11,12 @@ Ce projet, qui s'inscrit dans le domaine de la biodiversité, vise à résoudre 
     │   ... 
     ├── src/
     │   ├── __init__.py
-    │   ... 
+    │   ├── DataPreprocessing.py
+        ├── DataVisualization.py
+        ├── Models.py
     ├── requirements.txt
     ├── partie 1 - projet.ipynb
+    ├── partie 2 - projet.ipynb
     ├── LICENSE
     ├── AUTHORS.rst
     ├── .editorconfig
@@ -27,7 +30,9 @@ La structure du projet est organisée comme suit :
 
 - **src/** : Répertoire abritant les scripts source du projet :
   - **_init_.py** : Fichier d'initialisation du module Python.
-  - ...
+  - **DataPreprocessing.py** : classe contenant toutes les fontions du nettoyage et pretraitement des données
+  - **DataVisualization.py**: classe contenant toutes les fonctions de visualisation te d'affichage des graphes et des figures
+  - **Models.py**: Classe contenant toutes les fontions de definition, d'entrainement et d'évaluation des modèles utilisés 
 
 - **requirements.txt** : Fichier spécifiant les dépendances du projet.
 
